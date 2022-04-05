@@ -1,2 +1,2 @@
 # MySwift
-My SwiftPM for use in Xcode projects
+SwiftPM for use in my Xcode projects
