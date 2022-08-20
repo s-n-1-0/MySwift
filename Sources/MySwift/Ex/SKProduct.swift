@@ -16,7 +16,7 @@ extension SKProduct{
             let numberFormatter = NumberFormatter()
             numberFormatter.numberStyle = .currency
             numberFormatter.locale = self.priceLocale
-            return numberFormatter.string(from: self.price)
+            return numberFormatter.string(from: self.price)!
         }
     }
 }
