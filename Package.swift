@@ -5,6 +5,7 @@ import PackageDescription
 
 let package = Package(
     name: "MySwift",
+    defaultLocalization: "en",
     platforms: [
             .iOS(.v14)],
     products: [
@@ -22,7 +23,8 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "MySwift",
-            dependencies: []),
+            dependencies: [],
+            resources: [.process("Resources")]),
         .testTarget(
             name: "MySwiftTests",
             dependencies: ["MySwift"]),
