@@ -6,9 +6,14 @@
 //
 import SwiftUI
 
-struct FeedbackView: View {
+public struct FeedbackView: View {
+    public let origin:String
+    public let appType:FeedbackApp
     @State private var message = ""
-    var body: some View {
+    @State private var isSentAlert = false
+    @State private var alertText = ""
+    @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
+   public var body: some View {
         ScrollView{
             VStack{
                 VStack{
@@ -42,8 +47,26 @@ struct FeedbackView: View {
                             }
                         })
                     if !message.isEmpty{
-                        Button(action:{}){
+                        Button(action:{
+                            
+                            FeedbackRequest(origin, appType).send(message: message, completionHandler: {
+                                _,res,error in
+                                if error != nil || res == nil{
+                                    alertText = "送信に失敗しました。時間を置いてお試してください。"
+                                    
+                                }else{
+                                    alertText = "送信しました。"
+                                }
+                                isSentAlert = true
+                                
+                            })
+                            
+                        }){
                             Text("送信").frame(maxWidth:.infinity).foregroundColor(Color(UIColor.systemBackground)).padding().background(Color(UIColor.label)).cornerRadius(15)
+                        }.alert(isPresented: $isSentAlert){
+                            Alert(title:Text(alertText),dismissButton: .default(Text("戻る"), action: {
+                                presentationMode.wrappedValue.dismiss()
+                            }))
                         }
                     }
                 }.padding([.leading,.trailing])
@@ -55,6 +78,6 @@ struct FeedbackView: View {
 
 struct FeedbackView_Previews: PreviewProvider {
     static var previews: some View {
-        FeedbackView()
+        FeedbackView(origin: "", appType: .ChikuwaDiary)
     }
 }
