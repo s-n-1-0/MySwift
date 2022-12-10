@@ -3,9 +3,17 @@ import XCTest
 
 final class MySwiftTests: XCTestCase {
     func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct
-        // results.
-       // XCTAssertEqual(MySwift().text, "Hello, World!")
+        let str = NSLocalizedString("FeedbackView-Message", bundle: .module,comment: "")
+        print(str)
+    }
+    
+    func testFeedback(){
+        let expect = expectation(description: "SendFeedbackRequest")
+        let origin = "" //ここにURL (app repo参照)
+        FeedbackRequest(origin,.ChikuwaDiary).send(message: "テスト送信\nテステス&test=valid"){
+            _,_,_ in
+            expect.fulfill()
+        }
+        waitForExpectations(timeout: 30)
     }
 }
