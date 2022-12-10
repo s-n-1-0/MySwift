@@ -19,27 +19,33 @@ public struct FeedbackView: View {
                 VStack{
                     HStack(alignment:.bottom,spacing: 0){
                         Image(systemName: "paperplane.fill").font(.caption)
-                        Text("速達!").font(.caption)
+                        Text(localize("Express")).font(.caption)
                         Spacer()
                     }.foregroundColor(Color.blue)
                     HStack{
-                        Text("開発者へ要望・バグ報告を送る").font(.title2)
+                        Text(localize("Title")).font(.title2)
                         Spacer()
                     }
                 }.padding([.leading,.trailing])
                 Divider()
                 VStack(alignment:.leading){
-                    Text("アプリを利用していて「こういう機能がほしい」や「ここを直して欲しい」などの気づいたことがあればぜひお気軽に↓のフォームからお送りください!\n 改善点が見つかると開発者がとても助かります。").font(.caption).padding([.top])
-                    Text("※バグ報告の場合は詳細にお願いします!").font(.caption)
+                    HStack{
+                        Spacer()
+                        Image(uiImage: UIImage(named: "AppIcon") ?? UIImage()).frame(width: 100,height: 100).cornerRadius(15)
+                        Spacer()
+                    }
+                    Text(localize("Message")).padding([.top])
+                    Text(localize("Message2")).font(.caption)
+                    Divider().padding([.bottom])
                     TextEditor(text: $message).overlay(
                         RoundedRectangle(cornerRadius: 15)
-                            .stroke(Color(UIColor.label), lineWidth: 1)
+                            .stroke(Color(UIColor.secondaryLabel), lineWidth: 3)
                     ).frame(minHeight:100).overlay(
                         Group{
                             if message.isEmpty{
                                 VStack{
                                     HStack{
-                                        Text("ここに要望を記入...").foregroundColor(Color(UIColor.secondaryLabel))
+                                        Text(localize("EnterRequest")).foregroundColor(Color(UIColor.secondaryLabel))
                                         Spacer()
                                     }
                                     Spacer()
@@ -52,19 +58,19 @@ public struct FeedbackView: View {
                             FeedbackRequest(origin, appType).send(message: message, completionHandler: {
                                 _,res,error in
                                 if error != nil || res == nil{
-                                    alertText = "送信に失敗しました。時間を置いてお試してください。"
+                                    alertText = localize("SendFailed")
                                     
                                 }else{
-                                    alertText = "送信しました。"
+                                    alertText = localize("Sent")
                                 }
                                 isSentAlert = true
                                 
                             })
                             
                         }){
-                            Text("送信").frame(maxWidth:.infinity).foregroundColor(Color(UIColor.systemBackground)).padding().background(Color(UIColor.label)).cornerRadius(15)
+                            Text(localize("Send")).frame(maxWidth:.infinity).foregroundColor(Color(UIColor.systemBackground)).padding().background(Color(UIColor.label)).cornerRadius(15)
                         }.alert(isPresented: $isSentAlert){
-                            Alert(title:Text(alertText),dismissButton: .default(Text("戻る"), action: {
+                            Alert(title:Text(alertText),dismissButton: .default(Text(localize("Back")), action: {
                                 presentationMode.wrappedValue.dismiss()
                             }))
                         }
@@ -73,6 +79,9 @@ public struct FeedbackView: View {
                 Spacer()
             }
         }
+    }
+    func localize(_ key:String) -> String{
+        return ("FeedbackView-" + key).localizedModule
     }
 }
 
