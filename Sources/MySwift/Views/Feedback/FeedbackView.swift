@@ -52,39 +52,52 @@ public struct FeedbackView: View {
                                 }.padding(6)
                             }
                         })
-                    if !message.isEmpty{
-                        Button(action:{
-                            
-                            FeedbackRequest(origin, appType).send(message: message, completionHandler: {
-                                _,res,error in
-                                if error != nil || res == nil{
-                                    alertText = localize("SendFailed")
-                                    
-                                }else{
-                                    alertText = localize("Sent")
-                                }
-                                isSentAlert = true
+                    Group{
+                        if !message.isEmpty{
+                            Button(action:{
                                 
-                            })
-                            
-                        }){
-                            Text(localize("Send")).frame(maxWidth:.infinity).foregroundColor(Color(UIColor.systemBackground)).padding().background(Color(UIColor.label)).cornerRadius(15)
-                        }.alert(isPresented: $isSentAlert){
-                            Alert(title:Text(alertText),dismissButton: .default(Text(localize("Back")), action: {
-                                presentationMode.wrappedValue.dismiss()
-                            }))
+                                FeedbackRequest(origin, appType).send(message: message, completionHandler: {
+                                    _,res,error in
+                                    if error != nil || res == nil{
+                                        alertText = localize("SendFailed")
+                                        
+                                    }else{
+                                        alertText = localize("Sent")
+                                    }
+                                    isSentAlert = true
+                                    
+                                })
+                                
+                            }){
+                                SendTextView(labelColor: .systemBackground, backgroundColor: .label)
+                            }
+                        }else{
+                            SendTextView(labelColor: .white, backgroundColor: .lightGray)
                         }
+                    }.alert(isPresented: $isSentAlert){
+                        Alert(title:Text(alertText),dismissButton: .default(Text(localize("Back")), action: {
+                            presentationMode.wrappedValue.dismiss()
+                        }))
                     }
                 }.padding([.leading,.trailing])
                 Spacer()
             }
         }
     }
-    func localize(_ key:String) -> String{
+    static func localize(_ key:String) -> String{
         return ("FeedbackView-" + key).localizedModule
     }
+    func localize(_ key:String) -> String{
+        FeedbackView.localize(key)
+    }
 }
-
+private struct SendTextView:View{
+    let labelColor:UIColor
+    let backgroundColor:UIColor
+    var body: some View{
+        Text(FeedbackView.localize("Send")).frame(maxWidth:.infinity).foregroundColor(Color(labelColor)).padding().background(Color(backgroundColor)).cornerRadius(15)
+    }
+}
 struct FeedbackView_Previews: PreviewProvider {
     static var previews: some View {
         FeedbackView(origin: "", appType: .ChikuwaDiary)
