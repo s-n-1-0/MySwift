@@ -7,8 +7,14 @@
 import SwiftUI
 
 public struct FeedbackView: View {
-    public let origin:String
-    public let appType:FeedbackApp
+    public init(origin:String,appType:FeedbackApp,replyUrl:URL?){
+        self.origin = origin
+        self.appType = appType
+        self.replyUrl = replyUrl
+    }
+    let origin:String
+    let appType:FeedbackApp
+    let replyUrl:URL?
     @State private var message = ""
     @State private var isSentAlert = false
     @State private var alertText = ""
@@ -36,6 +42,11 @@ public struct FeedbackView: View {
                     }
                     Text(localize("Message")).padding([.top])
                     Text(localize("Message2")).font(.caption)
+                    if let url = replyUrl{
+                        Link(destination: url){
+                            Text(localize("ReplyLink")).font(.caption).underline()
+                        }
+                    }
                     Divider().padding([.bottom])
                     TextEditor(text: $message).overlay(
                         RoundedRectangle(cornerRadius: 15)
@@ -100,6 +111,6 @@ private struct SendTextView:View{
 }
 struct FeedbackView_Previews: PreviewProvider {
     static var previews: some View {
-        FeedbackView(origin: "", appType: .ChikuwaDiary)
+        FeedbackView(origin: "", appType: .ChikuwaDiary, replyUrl: URL(string: "https://sn-10.net")!)
     }
 }

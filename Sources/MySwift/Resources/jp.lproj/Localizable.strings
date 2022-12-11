@@ -9,6 +9,7 @@
 "FeedbackView-Title" = "開発者へ要望・バグ報告を送る";
 "FeedbackView-Message" = "アプリを利用していて「こういう機能がほしい」や「ここを直して欲しい」など気づいたことがありましたらぜひお気軽に↓のフォームからお送りください!\n 改善点が見つかると開発者がとても助かります。";
 "FeedbackView-Message2" = "※バグ報告の場合は詳細にお願いします!";
+"FeedbackView-ReplyLink" = "※開発者からの返答";
 "FeedbackView-EnterRequest" = "ここに要望を記入...";
 "FeedbackView-SendFailed" = "送信に失敗しました。時間を置いてお試してください。";
 "FeedbackView-Send" = "送信";
