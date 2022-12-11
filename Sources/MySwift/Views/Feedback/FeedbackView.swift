@@ -37,7 +37,7 @@ public struct FeedbackView: View {
                 VStack(alignment:.leading){
                     HStack{
                         Spacer()
-                        Image(uiImage: UIImage(named: "AppIcon") ?? UIImage()).frame(width: 100,height: 100).cornerRadius(15)
+                        Image(uiImage: UIImage(named: "AppIcon") ?? UIImage()).resizable().scaledToFit().frame(width: 100,height: 100).cornerRadius(15)
                         Spacer()
                     }
                     Text(localize("Message")).padding([.top])
