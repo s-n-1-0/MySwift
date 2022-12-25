@@ -7,14 +7,16 @@
 import SwiftUI
 
 public struct FeedbackView: View {
-    public init(origin:String,appType:FeedbackApp,replyUrl:URL?){
+    public init(origin:String,appType:FeedbackApp,replyUrl:URL?,appIconName:String = "AppIcon"){
         self.origin = origin
         self.appType = appType
         self.replyUrl = replyUrl
+        self.appIconName = appIconName
     }
     let origin:String
     let appType:FeedbackApp
     let replyUrl:URL?
+    let appIconName:String
     @State private var message = ""
     @State private var isSentAlert = false
     @State private var alertText = ""
@@ -37,7 +39,7 @@ public struct FeedbackView: View {
                 VStack(alignment:.leading){
                     HStack{
                         Spacer()
-                        Image(uiImage: UIImage(named: "AppIcon") ?? UIImage()).resizable().scaledToFit().frame(width: 100,height: 100).cornerRadius(15)
+                        Image(uiImage: UIImage(named: appIconName) ?? UIImage()).resizable().scaledToFit().frame(width: 100,height: 100).cornerRadius(15)
                         Spacer()
                     }
                     Text(localize("Message")).padding([.top])
