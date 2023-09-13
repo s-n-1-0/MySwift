@@ -5,13 +5,4 @@
   Created by Mac10 on 2022/11/30.
   
 */
-"FeedbackView-Express" = "Express!";
-"FeedbackView-Title" = "Send Requests and Bugs";
-"FeedbackView-Message" = "If you use this app and notice something that you would like to see fixed, please feel free to send it to us using the form at ↓ of this page!\nEnglish and Japanese are supported.";
-"FeedbackView-Message2" = "※If you report a bug, please be detailed!";
-"FeedbackView-ReplyLink" = "※Response from developer";
-"FeedbackView-EnterRequest" = "Enter request here...";
-"FeedbackView-SendFailed" = "Send failed. Please try again later.";
-"FeedbackView-Send" = "Send";
-"FeedbackView-Sent" = "Sent.";
-"FeedbackView-Back" = "Back";
+"language" = "en";
