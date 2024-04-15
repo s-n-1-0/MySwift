@@ -7,23 +7,46 @@
 
 import SwiftUI
 import WebKit
-struct ProgressWebView: View {
-    let url: URL
+public struct ProgressWebView: View {
+    public let url: URL
+    public let progressStyle:ProgressViewStyleType
     @State private var loadingProgress: Double = 0.0
-    var body: some View {
-        ZStack(alignment: .top) {
-            VStack(spacing: 0) {
-                WebView(
-                    url: url,
-                    loadingProgress: $loadingProgress
-                )
+    public var body: some View {
+        WebView(
+            url: url,
+            loadingProgress: $loadingProgress
+        ).modifier(ProgressModifier(loadingProgress: loadingProgress, progressStyle: progressStyle))
+    }
+}
+
+fileprivate struct ProgressModifier:ViewModifier{
+    let loadingProgress:Double
+    let progressStyle:ProgressViewStyleType
+    func body(content: Content) -> some View {
+        
+        switch(progressStyle){
+        case .linear:
+            ZStack(alignment: .top) {
+                content
+                if loadingProgress < 1{
+                    ProgressView(value: loadingProgress, total: 1.0)
+                        .progressViewStyle(LinearProgressViewStyle())
+                }
             }
-            if loadingProgress > 0  && loadingProgress < 1{
-                ProgressView(value: loadingProgress, total: 1.0)
-                    .progressViewStyle(LinearProgressViewStyle())
+        case .circle:
+            ZStack(alignment: .center) {
+                content
+                if loadingProgress < 1{
+                    ProgressView().progressViewStyle(CircularProgressViewStyle()).scaleEffect(1.5)
+                }
             }
         }
     }
+}
+
+public enum ProgressViewStyleType{
+    case linear
+    case circle
 }
 
 //ref https://qiita.com/kamimi01/items/33446e032822518cb7f7
@@ -73,5 +96,5 @@ extension WebView {
 }
 
 #Preview {
-    ProgressWebView(url: URL(string: "https://hello.sn-10.net")!)
+    ProgressWebView(url: URL(string: "https://google.com")!, progressStyle: .circle)
 }

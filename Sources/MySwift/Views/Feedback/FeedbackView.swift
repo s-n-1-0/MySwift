@@ -7,7 +7,7 @@
 import SwiftUI
 import WebKit
 
-public struct FeedbackView: UIViewRepresentable {
+public struct FeedbackView: View {
     public init(appType:FeedbackApp){
         let origin = "https://hello.sn-10.net"
         let params = FeedbackParams()
@@ -15,13 +15,8 @@ public struct FeedbackView: UIViewRepresentable {
     }
     
     let url: URL
-    public func makeUIView(context: Context) -> WKWebView {
-        return WKWebView()
-    }
-    
-    public func updateUIView(_ uiView: WKWebView, context: Context) {
-        let request = URLRequest(url: url)
-        uiView.load(request)
+    public var body: some View{
+        ProgressWebView(url: url, progressStyle: .circle)
     }
 }
 
