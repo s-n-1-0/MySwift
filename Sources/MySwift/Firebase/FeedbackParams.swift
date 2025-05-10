@@ -9,6 +9,8 @@ import UIKit
 public enum FeedbackApp:String{
     case ChikuwaDiary = "diary"
 }
+
+@MainActor
 public struct FeedbackParams:Codable{
     init(){
         self.os = UIDevice.current.systemName.encodeParam

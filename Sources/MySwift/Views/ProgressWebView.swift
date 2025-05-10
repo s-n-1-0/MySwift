@@ -83,7 +83,10 @@ extension WebView {
         init(_ parent: WebView) {
             self.parent = parent
             let progressObservation = parent.webView.observe(\.estimatedProgress, options: .new, changeHandler: { _, value in
-                parent.loadingProgress = value.newValue ?? 0
+                Task{
+                    @MainActor in
+                    parent.loadingProgress = value.newValue ?? 0
+                }
             })
             observations = [
                 progressObservation
