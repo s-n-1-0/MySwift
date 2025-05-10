@@ -6,3 +6,8 @@
   
 */
 "language" = "en";
+
+"IDFATitle" = "Ad settings\n(About tracking)";
+"IDFAAnnounce" = "After the end of 2020, iOS 14 apps will be required to display tracking permission. \n Users can choose to allow or deny this app to get IDFA.\n\n If you allow the get of IDFA, you can use the user's behave to display suitable ads.\n If you deny the get of IDFA, you will see ads that are less relevant than if you allowed it. \n";
+"IDFAKome" = "*If there is no allow tracking item in the settings app, all apps have a common deny setting.";
+"Continue" = "Continue";

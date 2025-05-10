@@ -20,15 +20,15 @@ public struct IDFASettingView: View {
             HStack {
                 Spacer()
                 Image(systemName: "person.fill").resizable().frame(width: 25, height: 25).foregroundColor(appColor)
-                Text("ST-IDFATitle").font(.title)
+                Text("IDFATitle",bundle: .module).font(.title)
                 Spacer()
             }
             Divider()
             HStack {
                 Spacer()
                 VStack {
-                    Text("ST-IDFAAnnounce").font(.body)
-                    Text("ST-IDFAKome").font(.caption)
+                    Text("IDFAAnnounce",bundle: .module).font(.body)
+                    Text("IDFAKome",bundle: .module).font(.caption)
                 }
                 Spacer()
             }
@@ -50,7 +50,7 @@ public struct IDFASettingView: View {
                 dismiss()
             }) {
                 HStack {
-                    Text("ST-Continue")
+                    Text("Continue",bundle: .module)
                 }.frame(maxWidth: .infinity).padding([.top, .bottom]).foregroundColor(textColor)
             }.accentColor(textColor).background(appColor)
             .frame(width: 150).cornerRadius(10)
