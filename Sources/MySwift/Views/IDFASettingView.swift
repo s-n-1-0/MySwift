@@ -9,8 +9,14 @@ import AppTrackingTransparency
 import SwiftUI
 
 public struct IDFASettingView: View {
-    public let appColor:Color
-    public let textColor:Color
+    
+    public init(appColor: Color, textColor: Color) {
+        self.appColor = appColor
+        self.textColor = textColor
+    }
+    
+    let appColor:Color
+    let textColor:Color
     
     @Environment(\.dismiss) private var dismiss
     
