@@ -41,19 +41,21 @@ public struct IDFASettingView: View {
             Divider()
             Spacer(minLength: 15)
             Button(action: {
-                switch ATTrackingManager.trackingAuthorizationStatus {
-                case .authorized, .denied, .restricted:
-                    if let url = URL(string: UIApplication.openSettingsURLString) {
-                        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                Task{
+                    switch ATTrackingManager.trackingAuthorizationStatus {
+                    case .authorized, .denied, .restricted:
+                        if let url = URL(string: UIApplication.openSettingsURLString) {
+                            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                        }
+                    case .notDetermined:
+                        await ATTrackingManager.requestTrackingAuthorization()
+                    default:
+                        if let url = URL(string: UIApplication.openSettingsURLString) {
+                            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                        }
                     }
-                case .notDetermined:
-                    ATTrackingManager.requestTrackingAuthorization(completionHandler: { _ in })
-                default:
-                    if let url = URL(string: UIApplication.openSettingsURLString) {
-                        UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                    }
+                    dismiss()
                 }
-                dismiss()
             }) {
                 HStack {
                     Text("Continue",bundle: .module)
