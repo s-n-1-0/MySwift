@@ -16,14 +16,14 @@ let package = Package(
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
-        // .package(url: /* package url */, from: "1.0.0"),
+        .package(url: "https://github.com/googleads/swift-package-manager-google-mobile-ads.git", from: "12.4.0"),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "MySwift",
-            dependencies: [],
+            dependencies: [.product(name: "GoogleMobileAds", package: "swift-package-manager-google-mobile-ads")],
             resources: [.process("Resources")]),
         .testTarget(
             name: "MySwiftTests",
