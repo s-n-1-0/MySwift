@@ -22,6 +22,6 @@ public struct FeedbackView: View {
 
 struct FeedbackView_Previews: PreviewProvider {
     static var previews: some View {
-        FeedbackView(appType: .ChikuwaDiary)
+        FeedbackView(appType: .LifeCompass)
     }
 }
