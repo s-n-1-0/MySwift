@@ -13,7 +13,7 @@ extension View{
     @ViewBuilder public func makeAdMobBanner(client: AdMobClient, adUnitID: String, wantToClose: @escaping () -> Void) -> some View {
         if !client.activeSubscription {
             HStack {
-                let size = AdMobBannerView.getAdBannerSize()
+                let size = getAdMobBannerSize()
                 Spacer()
                 AdMobBannerView(client: client,adUnitID: adUnitID)
                     .frame(width: size.size.width, height: size.size.height)
@@ -22,6 +22,15 @@ extension View{
         } else {
             EmptyView()
         }
+    }
+    
+    public func getAdMobBannerSize() -> AdSize {
+        if let rootView = UIApplication.shared.windows.first?.rootViewController?.view {
+            let frame = rootView.frame.inset(by: rootView.safeAreaInsets)
+            return currentOrientationAnchoredAdaptiveBanner(width: frame.width)
+        }
+        // No root VC, use 320x50 ad banner
+        return AdMobBannerView.bannerSize
     }
 }
 
@@ -35,7 +44,7 @@ struct AdMobBannerView: UIViewRepresentable {
     let adUnitID: String
     @State private var banner: BannerView = .init(adSize: bannerSize)
     func makeUIView(context _: Context) -> BannerView {
-        let bannerSize = AdMobBannerView.getAdBannerSize()
+        let bannerSize = getAdMobBannerSize()
         banner.adSize = bannerSize
         banner.adUnitID = adUnitID
         banner.rootViewController = getPresentedViewController()
@@ -44,15 +53,6 @@ struct AdMobBannerView: UIViewRepresentable {
     }
 
     func updateUIView(_: BannerView, context _: Context) {}
-
-    static func getAdBannerSize() -> AdSize {
-        if let rootView = UIApplication.shared.windows.first?.rootViewController?.view {
-            let frame = rootView.frame.inset(by: rootView.safeAreaInsets)
-            return currentOrientationAnchoredAdaptiveBanner(width: frame.width)
-        }
-        // No root VC, use 320x50 ad banner
-        return bannerSize
-    }
 }
 
 private struct makeAdBannerOverlayModifier: ViewModifier {
