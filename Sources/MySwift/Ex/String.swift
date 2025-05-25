@@ -6,6 +6,10 @@
 //
 import UIKit
 extension String{
+    public func convertAt<key: StringProtocol>(with: key) -> String {
+        return replacingOccurrences(of: "%@", with: with)
+    }
+    
     public var localized: String {
         return NSLocalizedString(self, comment: self)
     }
