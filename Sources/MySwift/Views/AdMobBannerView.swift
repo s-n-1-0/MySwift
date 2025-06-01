@@ -10,7 +10,7 @@ import SwiftUI
 import GoogleMobileAds
 
 extension View{
-    @ViewBuilder public func makeAdMobBanner(client: AdMobClient, adUnitID: String, wantToClose: @escaping () -> Void) -> some View {
+    @ViewBuilder public func makeAdMobBanner(client: AdMobClient, adUnitID: String, wantToClose: (() -> Void)?) -> some View {
         if !client.activeSubscription {
             HStack {
                 let size = getAdMobBannerSize()
@@ -18,7 +18,7 @@ extension View{
                 AdMobBannerView(client: client,adUnitID: adUnitID)
                     .frame(width: size.size.width, height: size.size.height)
                 Spacer()
-            }.modifier(makeAdBannerOverlayModifier(wantToClose: wantToClose))
+            }.modifier(AdBannerOverlayModifier(wantToClose: wantToClose))
         } else {
             EmptyView()
         }
@@ -55,12 +55,16 @@ struct AdMobBannerView: UIViewRepresentable {
     func updateUIView(_: BannerView, context _: Context) {}
 }
 
-private struct makeAdBannerOverlayModifier: ViewModifier {
-    let wantToClose: () -> Void
+private struct AdBannerOverlayModifier: ViewModifier {
+    let wantToClose: (() -> Void)?
     func body(content: Content) -> some View {
-        content.overlay(Button(action: wantToClose, label: {
-            Image(systemName: "multiply").foregroundColor(Color(uiColor:UIColor.secondaryLabel)).frame(width: 30, height: 30)
-        }).background(Color(uiColor: UIColor.systemBackground)).cornerRadius(15).offset(x: -10, y: -30), alignment: .topTrailing)
+        if let wantToClose {
+            content.overlay(Button(action: wantToClose, label: {
+                Image(systemName: "multiply").foregroundColor(Color(uiColor:UIColor.secondaryLabel)).frame(width: 30, height: 30)
+            }).background(Color(uiColor: UIColor.systemBackground)).cornerRadius(15).offset(x: -10, y: -30), alignment: .topTrailing)
+        }else{
+            content
+        }
     }
 }
 
