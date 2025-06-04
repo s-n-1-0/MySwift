@@ -6,6 +6,10 @@
 //
 import UIKit
 extension String{
+    public static var isJapanese: Bool {
+        "language".localizedModule == "ja"
+    }
+    
     public func convertAt<key: StringProtocol>(with: key) -> String {
         return replacingOccurrences(of: "%@", with: with)
     }
