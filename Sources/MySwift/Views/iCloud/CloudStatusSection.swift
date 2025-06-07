@@ -6,17 +6,18 @@
 //
 
 import SwiftUI
-
+import CloudKit
 
 public struct CloudStatusSection: View {
-    public init() {
+    public init(cloudType:CloudType) {
         let appName = Bundle.main.object(forInfoDictionaryKey: "CFBundleDisplayName") as? String
         
         annouceText = "CloudAnnounce".localizedModule.convertAt(with: appName ?? "")
-        iCloudMode = (FileManager.default.url(forUbiquityContainerIdentifier: nil) != nil) ? "CloudAllow" : "CloudDeny"
+        self.cloudType = cloudType
     }
     
-    let iCloudMode: String
+    @State private var iCloudMode: String = ""
+    let cloudType:CloudType
     let annouceText:String
     
     public var body: some View {
@@ -27,12 +28,36 @@ public struct CloudStatusSection: View {
                 Spacer()
                 Text(iCloudMode.localizedModule)
             }
+        }.onAppear{
+            switch cloudType{
+            case .Document:
+                iCloudMode = (FileManager.default.url(forUbiquityContainerIdentifier: nil) != nil) ? "CloudAllow" : "CloudDeny"
+            case .Kit:
+                let container = CKContainer.default()
+
+                 container.accountStatus { status, error in
+                     Task{
+                         @MainActor in
+                         switch status {
+                         case .available:
+                             iCloudMode = "CloudAllow"
+                         default:
+                             iCloudMode = "CloudDeny"
+                         }
+                     }
+                 }
+            }
         }
     }
 }
 
+public enum CloudType{
+    case Kit
+    case Document
+}
+
 #Preview {
     List{
-        CloudStatusSection()
+        CloudStatusSection(cloudType: .Kit)
     }
 }
