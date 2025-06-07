@@ -18,6 +18,12 @@ extension String{
         return NSLocalizedString(self, comment: self)
     }
     
+    
+    // 外から参照するためだけのエイリアス
+    public var localizedMySwift:String{
+        return localizedModule
+    }
+    
     var localizedModule:String{
         return NSLocalizedString(self, bundle: .module,comment: self) as String
     }
