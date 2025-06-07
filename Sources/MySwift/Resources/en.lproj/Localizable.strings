@@ -18,3 +18,9 @@
 "IDFAAvailable" = "Available";
 "IDFAUnconfirmed" = "Unconfirmed";
 "IDFADeny" = "Deny";
+
+/* iCloud */
+"CloudAllow" = "Allow";
+"CloudDeny" = "Deny";
+"CloudAnnounce" = "To allow access to iCloud, please allow %@ from \"Name (registered your name)\" → \"iCloud\" of Settings app.";
+"CloudAccess" = "Access to iCloud";

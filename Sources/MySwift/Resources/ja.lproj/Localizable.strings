@@ -18,3 +18,9 @@
 "IDFAAvailable" = "可能";
 "IDFAUnconfirmed" = "未確認";
 "IDFADeny" = "拒否";
+
+/* iCloud */
+"CloudAllow" = "許可";
+"CloudDeny" = "拒否";
+"CloudAnnounce" = "iCloudへのアクセスを許可するには設定アプリの「名前(登録名)」→「iCloud」から%@を許可してください。";
+"CloudAccess" = "iCloudへのアクセス";
