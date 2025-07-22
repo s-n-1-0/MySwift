@@ -12,7 +12,7 @@ let package = Package(
         // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
             name: "MySwift",
-            targets: ["MySwift"]),
+            targets: ["MySwift","MySwiftAds"]),
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
@@ -23,8 +23,14 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "MySwift",
-            dependencies: [.product(name: "GoogleMobileAds", package: "swift-package-manager-google-mobile-ads")],
+            dependencies: [],
             resources: [.process("Resources")]),
+        .target(
+            name: "MySwiftAds",
+            dependencies: [
+                "MySwift",
+                .product(name: "GoogleMobileAds", package: "swift-package-manager-google-mobile-ads")],
+            resources: []),
         .testTarget(
             name: "MySwiftTests",
             dependencies: ["MySwift"]),
