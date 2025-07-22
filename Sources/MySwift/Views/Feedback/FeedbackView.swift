@@ -8,10 +8,10 @@ import SwiftUI
 import WebKit
 
 public struct FeedbackView: View {
-    public init(appType:FeedbackApp){
+    public init(appType:String){
         let origin = "https://hello.sn-10.net"
         let params = FeedbackParams()
-        self.url = URL(string: "\(origin)/apps/\(appType.rawValue)/feedback\(params.urlParams)")!
+        self.url = URL(string: "\(origin)/apps/\(appType)/feedback\(params.urlParams)")!
     }
     
     let url: URL
@@ -22,6 +22,6 @@ public struct FeedbackView: View {
 
 struct FeedbackView_Previews: PreviewProvider {
     static var previews: some View {
-        FeedbackView(appType: .LifeCompass)
+        FeedbackView(appType: "app")
     }
 }

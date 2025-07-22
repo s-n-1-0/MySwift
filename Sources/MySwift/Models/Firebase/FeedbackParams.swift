@@ -6,10 +6,6 @@
 //
 
 import UIKit
-public enum FeedbackApp:String{
-    case ChikuwaDiary = "diary"
-    case LifeCompass = "life-compass"
-}
 
 @MainActor
 public struct FeedbackParams:Codable{
