@@ -7,13 +7,13 @@
 
 import Foundation
 
-class MockDateHandler: DateHandler {
-    var date: Date!
-    override func now() -> Date {
+public class MockDateHandler: DateHandler {
+    public var date: Date!
+    public override func now() -> Date {
         return date
     }
 
-    @MainActor static func mockNow(_ date: Date) {
+    public static func mockNow(_ date: Date) {
         let mockDateHandler = MockDateHandler()
         mockDateHandler.date = date
         DateHandler.standard = mockDateHandler
