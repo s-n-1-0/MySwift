@@ -28,7 +28,8 @@ extension View{
     public func getAdMobBannerSize() -> AdSize {
         if let rootView = UIApplication.shared.windows.first?.rootViewController?.view {
             let frame = rootView.frame.inset(by: rootView.safeAreaInsets)
-            return currentOrientationAnchoredAdaptiveBanner(width: frame.width)
+            let width = min(frame.width, 1024)
+            return currentOrientationAnchoredAdaptiveBanner(width: width)
         }
         // No root VC, use 320x50 ad banner
         return AdMobBannerView.bannerSize
