@@ -26,7 +26,10 @@ extension View{
     }
     
     public func getAdMobBannerSize() -> AdSize {
-        if let rootView = UIApplication.shared.windows.first?.rootViewController?.view {
+        if let rootView = UIApplication.shared.connectedScenes
+            .compactMap({ $0 as? UIWindowScene })
+            .first(where: { $0.activationState == .foregroundActive })?
+            .windows.first(where: { $0.isKeyWindow })?.rootViewController?.view {
             let frame = rootView.frame.inset(by: rootView.safeAreaInsets)
             let width = min(frame.width, 1024)
             return currentOrientationAnchoredAdaptiveBanner(width: width)
